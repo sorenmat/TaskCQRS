@@ -1,5 +1,5 @@
 Premis
------------------------
+---------------------
 We need to make a Task application.
 
 
@@ -16,10 +16,17 @@ The aggreate should transform the command into a number of events, if the comman
 since it something that has happend in the domain, and can't be undone.
    
 
+AggregateRoot
+---------------------
+
+The aggregate root is a business context. The idea is that the aggregate will encapsulate enough state to validate commands executed against it.  
+In our small example we keep the state of the id and duedate in the Task aggregate. We need the id to validate the business rule that states that the CreateCommand
+should be the first command, and since the CreateCommand is the only command to change the id we use that.
+The duedate is kept to make the example more complete.
 
 
 Domain
--------------------
+---------------------
 
 First we need to define our domain model. In our case we wanna make an simple TODO application.
 We need to define some basic entities.

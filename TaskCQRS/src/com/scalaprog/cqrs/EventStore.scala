@@ -2,6 +2,10 @@ package com.scalaprog.cqrs
 import com.scalaprog.cqrs.events.Event
 import com.scalaprog.cqrs.domain.Task
 
+/**
+ * The event store is where the events are stored. Normally this would be a File, database or some other persistence storage.
+ * This storage is append only, we DO NEVER change events in the event store... EVER...
+ */
 class EventStore {
    var eventStream = List[Event]()
   
@@ -12,12 +16,6 @@ class EventStore {
     eventStream = event :: eventStream
   }
   
-   def getByid[X <: AggregateRoot[_]](id: Guid) = {
-     val e = eventStream.filter(e => e.id == id)
-     val task = new Task(this)
-     task.loadFromHistory(e)
-     task
-   }
    override def toString = eventStream.mkString(", ")
    
   
