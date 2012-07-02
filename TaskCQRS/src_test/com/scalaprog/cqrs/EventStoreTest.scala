@@ -35,5 +35,22 @@ class EventStoreTest extends FlatSpec with ShouldMatchers {
     } should produce[RuntimeException]
 
   }
+  
+ "Loading from eventstore" should "give the same date on both aggregates" in {
+    val taskAggregate = new Task(eventStore)
+
+    val createTaskCommand = new CreateNewTask(Guid.create("task"), "fix cable tv", "Fix the tv man, Springer is on soon", new Date(), 1)
+    taskAggregate.create(createTaskCommand)
+
+    val theDate = new Date()
+    val changeDueDate = new ChangeDueDateOnTask(theDate)
+    taskAggregate.changeDueDate(changeDueDate)
+
+    
+   val newAggregate = taskAggregate.getByid(classOf[Task], taskAggregate.id)
+   newAggregate.dueDate should equal(theDate)
+   
+  }
+  
 }
 
