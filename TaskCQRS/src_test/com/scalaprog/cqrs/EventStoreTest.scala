@@ -10,7 +10,7 @@ import com.scalaprog.cqrs.command.ChangeDueDateOnTask
 
 @RunWith(classOf[JUnitRunner])
 class EventStoreTest extends FlatSpec with ShouldMatchers {
-  val eventStore = new EventStore
+  val eventStore = new EventStore(new EventBus)
 
   "EventStore" should "contain two events" in {
     val taskAggregate = new Task(eventStore)

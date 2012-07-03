@@ -23,14 +23,15 @@ The aggregate root is a business context. The idea is that the aggregate will en
 In our small example we keep the state of the id and duedate in the Task aggregate. We need the id to validate the business rule that states that the CreateCommand
 should be the first command, and since the CreateCommand is the only command to change the id we use that.
 The duedate is kept to make the example more complete.
+The state of the aggregate root is almost never strings other then identity keys. The reason for this is that strings are rarely good to make a decision upon.
+The other reason is that the aggregate state is kept in memory, and therefore should be as simple as possible.
+  
 
 
-Domain
+So where is my data stored ?
+If the aggregate root only contain enough data/state to make business decisions on whether or not a command can successfully be executed, where do my data live ??
+This is where the ReadModel/ViewModel comes into play.
+
+
+ReadModel / ViewModel  
 ---------------------
-
-First we need to define our domain model. In our case we wanna make an simple TODO application.
-We need to define some basic entities.
-
- Person
- Todo
- 

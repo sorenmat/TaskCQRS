@@ -6,7 +6,7 @@ import com.scalaprog.cqrs.domain.Task
  * The event store is where the events are stored. Normally this would be a File, database or some other persistence storage.
  * This storage is append only, we DO NEVER change events in the event store... EVER...
  */
-class EventStore {
+class EventStore(bus: EventBus) {
    var eventStream = List[Event]()
   
   /**
@@ -14,6 +14,7 @@ class EventStore {
    */
   def store[E <: Event](event: E) {
     eventStream = event :: eventStream
+    bus.publish(event)
   }
   
    override def toString = eventStream.mkString(", ")
