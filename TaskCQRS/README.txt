@@ -35,3 +35,5 @@ This is where the ReadModel/ViewModel comes into play.
 
 ReadModel / ViewModel  
 ---------------------
+
+The ReadModel should react to events published via the EventBus. If we have a task readmodel, that model should react to TaskCreated and TaskDueDateChanged events.
