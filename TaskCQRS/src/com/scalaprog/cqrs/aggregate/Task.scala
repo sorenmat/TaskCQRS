@@ -19,7 +19,7 @@ class Task(eventStore: EventStore) extends AggregateRoot[TaskEvent](eventStore) 
   def this() {
     this(null)
   }
-  
+
   var id: Guid = _
   var dueDate: Date = _
 
@@ -43,8 +43,11 @@ class Task(eventStore: EventStore) extends AggregateRoot[TaskEvent](eventStore) 
       case e: TaskDueDateChanged => dueDate = e.dueDate
       case _ =>
     }
-    if(isNew) {
-    	eventStore.store(e)
+    if (isNew) {
+      version = version + 1 // count up the version number of this aggregate
+      e.version = version // sets the version on the event, this should ensure that an aggregates events is in sequential order
+
+      eventStore.store(e)
     }
     e => Unit
   }

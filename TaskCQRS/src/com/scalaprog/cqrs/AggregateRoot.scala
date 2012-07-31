@@ -3,6 +3,7 @@ import com.scalaprog.cqrs.events.Event
 
 abstract class AggregateRoot[EventType](eventStore: EventStore) {
  
+  var version = -1
   protected def applyEvent(e: EventType, isNew: Boolean) : Event => Unit
 
   def uncommittedEvents: Iterable[EventType] = _uncommittedEvents
